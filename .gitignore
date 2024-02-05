@@ -1,0 +1,10 @@
+/node_modules/
+/build/
+/build_database/
+/.env
+/.env.docker-compose
+/public/
+/logs/
+/temp/
+/package-lock.json
+/.nvmrc
