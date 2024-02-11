@@ -6,8 +6,8 @@ type Res200Options = {
 }
 
 
-function res200 (res: FastifyReply, data: Res200Options) {
-    return res.status(200).send({
+function res200 (this: FastifyReply, data: Res200Options) {
+    return this.status(200).send({
         ...(data ?? []),
         success: true
     });
@@ -18,15 +18,15 @@ type ResErrorOptions =  {
     error?: string | null
 }
 
-function res4xx (res: FastifyReply, data: ResErrorOptions) {
+function res4xx (this: FastifyReply, data: ResErrorOptions) {
     if(!data) {
-        return res.status(400).send({
+        return this.status(400).send({
             success: false,
             error: 'Bad Request'
         })
     }
 
-    return res.status(data.httpCode ?? 400).send({
+    return this.status(data.httpCode ?? 400).send({
         success: false,
         error: data.error ?? "Bad Request"
     })
@@ -34,15 +34,15 @@ function res4xx (res: FastifyReply, data: ResErrorOptions) {
 
 
 
-function res500 (res: FastifyReply, data: ResErrorOptions) {
+function res500 (this: FastifyReply, data?: ResErrorOptions) {
     if(!data){
-        return res.status(500).send({
+        return this.status(500).send({
             success: false,
             error: 'Internal Server Error'
         })
     }
 
-    return res.status(data.httpCode ?? 500).send({
+    return this.status(data.httpCode ?? 500).send({
         success: false,
         error: data.error ?? "Internal Server Error"
     })

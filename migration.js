@@ -43,7 +43,7 @@ const argv = require('yargs')
 
 
 
-const CreateFile = ({ type = '', name = '' }) => {
+const createFile = ({ type = '', name = '' }) => {
     // BUILD FILENAME AND CURRENT DATE TO CREATE 
     const date = (new Date()).toISOString().replace(/(-|:)/g, '').split('T');
     const fileName = `${date[0]}${date[1].substring(0, 6)}_${name}.js`;
@@ -63,7 +63,7 @@ const CreateFile = ({ type = '', name = '' }) => {
     context += "\n}";
 
     const folderType = type === 'm' ? 'migrations' : 'seeders';
-    const folderPath = `${mainFolderPath}/database/${folderType}`;
+    const folderPath = `./src/database/${folderType}`;
 
     if (!fs.existsSync(folderPath)) {
         fs.mkdirSync(folderPath, { recursive: true });

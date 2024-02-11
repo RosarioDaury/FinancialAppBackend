@@ -2,9 +2,9 @@ import { FastifyInstance } from "fastify"
 import { JSONSchemaType } from "ajv"
 
 const HTTP200 = {
-    $id: "HTTP200",
-    type: "object",
-    required: "success",
+    $id: 'HTTP200',
+    type: 'object',
+    required: ['success'],
     properties: {
         success: {
             type: "boolean",

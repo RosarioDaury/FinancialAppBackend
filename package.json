@@ -5,14 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon"
-  },
-  "nodemonConfig": {
-    "watch": [
-      "src/"
-    ],
-    "ext": "ts,js,json",
-    "exec": "node -e 'console.clear();' && ts-node src/api/app.ts"
+    "dev": "nodemon src/api/app.ts"
   },
   "keywords": [
     "financial",
@@ -39,6 +32,7 @@
     "@fastify/helmet": "^11.1.1",
     "ajv": "^8.12.0",
     "bcrypt": "^5.1.1",
+    "bcrypt-ts": "^5.0.1",
     "dotenv": "^16.4.1",
     "fastify": "^4.26.0",
     "jsonwebtoken": "^9.0.2",

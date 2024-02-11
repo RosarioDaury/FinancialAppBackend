@@ -23,7 +23,7 @@ class ResponseSchema {
         response.properties = Object.assign(response.properties, obj.properties ?? {});
 
         this['200'] = response;
-        return response;
+        return this;
     } 
     
     HTTP4XX() {
@@ -50,6 +50,13 @@ class ResponseSchema {
 }
 
 
-export function FnResponsesSchema() {
+export function FnResponseSchema() {
     return new ResponseSchema();
+}
+
+export type TResponseSchemaPlugin = {
+    ResponseSchema(): ResponseSchema
+}
+export default {
+    ResponseSchema: FnResponseSchema
 }
