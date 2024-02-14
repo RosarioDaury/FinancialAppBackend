@@ -86,7 +86,7 @@ Users.init(
         }
     },
     {
-        tableName: 'FaUser',
+        tableName: 'FaUsers',
         createdAt: 'createdAt',
         updatedAt: 'updatedAt',
         sequelize: dbConnection

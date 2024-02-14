@@ -11,7 +11,7 @@ module.exports = {
 
 		try {
 
-			await queryInterface.createTable('FaUserType', {
+			await queryInterface.createTable('FaUserTypes', {
 				id: {
 					type: sequelize.DataTypes.TINYINT.UNSIGNED,
 					primaryKey: true,
@@ -35,7 +35,7 @@ module.exports = {
 			});
 
 
-			await queryInterface.createTable('FaUser', {
+			await queryInterface.createTable('FaUsers', {
 				id: {
 					type: sequelize.DataTypes.TINYINT.UNSIGNED,
 					primaryKey: true,
@@ -62,7 +62,7 @@ module.exports = {
 					type: sequelize.DataTypes.STRING(50),
 					allowNull: false
 				},
-				userType: {
+				type_id: {
 					type: sequelize.DataTypes.TINYINT.UNSIGNED,
 					allowNull: false
 				},
@@ -87,45 +87,45 @@ module.exports = {
 				}
 			});
 
-			await queryInterface.addConstraint('FaUser', {
-				fields: ['userType'],
+			await queryInterface.addConstraint('FaUsers', {
+				fields: ['type_id'],
 				type: 'foreign key',
 				name: 'fauser_fk_usertype',
-				references: { field: 'id', table: 'FaUserType'},
+				references: { field: 'id', table: 'FaUserTypes'},
 				onDelete: 'restrict',
 				onUpdate: 'restrict'
 			});
 
-			await queryInterface.addIndex('FaUser', {
+			await queryInterface.addIndex('FaUsers', {
 				fields: ['firstName', 'lastName'],
 				name: 'fauser_ft_fullname',
 				type: 'FULLTEXT'
 			});
 
-			await queryInterface.addIndex('FaUser', {
+			await queryInterface.addIndex('FaUsers', {
 				fields: ['email'],
 				name: 'fauser_idx_email',
 				type: 'UNIQUE'
 			});
 
-			await queryInterface.addIndex('FaUser', {
+			await queryInterface.addIndex('FaUsers', {
 				fields: ['username'],
 				name: 'fauser_idx_username',
 				type: 'UNIQUE'
 			});
 
-			await queryInterface.addIndex('FaUser', {
+			await queryInterface.addIndex('FaUsers', {
 				fields: ['active'],
 				name: 'fauser_idx_active'
 			})
 
 		} catch(err) {
 
-			await queryInterface.dropTable('FaUserType', {
+			await queryInterface.dropTable('FaUserTypes', {
 				force: true
 			});
 
-			await queryInterface.dropTable('FaUser', {
+			await queryInterface.dropTable('FaUsers', {
 				force: true
 			});
 
@@ -139,11 +139,11 @@ module.exports = {
 	 * @param {Sequelize} sequelize
 	 */
 	async down (queryInterface, sequelize) {
-		await queryInterface.dropTable('FaUserType', {
+		await queryInterface.dropTable('FaUserTypes', {
 			force: true
 		});
 
-		await queryInterface.dropTable('FaUser', {
+		await queryInterface.dropTable('FaUsers', {
 			force: true
 		});
 

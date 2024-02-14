@@ -1,9 +1,9 @@
 import Category from "../model";
-import { CategoryAttributes, CategoryCreationAttributes } from "../model";
+import { CategoriesAttributes, CategoriesCreationAttributes } from "../model";
 
-interface CreationAttributes extends Omit<CategoryCreationAttributes, 'id' | 'createdAt' | 'updatedAt'> {}
+interface CreationAttributes extends Omit<CategoriesCreationAttributes, 'id' | 'createdAt' | 'updatedAt'> {}
 
-export const create = async (category: CreationAttributes): Promise<CategoryAttributes> => {
+export const create = async (category: CreationAttributes): Promise<CategoriesAttributes> => {
     const record = await Category.create(category,{
         raw: true
     });

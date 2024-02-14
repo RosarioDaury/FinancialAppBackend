@@ -1,4 +1,4 @@
-import User from "#/models/user";
+import User from "#/models/users";
 import UserType from "#/models/userTypes";
 import { comparePassword, encryptPassword } from "#/shared/helpers/encryptPasswords";
 import { encryptUserJwt } from "#/shared/helpers/jwtHandler";
@@ -31,7 +31,7 @@ type CreateUserBody = {
     username: string,
     password: string,
     email: string,
-    userType: number,
+    type_id: number,
     balance: number
 }
 
@@ -43,7 +43,7 @@ const createUser: RouteHandler<{Body: CreateUserBody}> = async (req, res) => {
             username,
             password,
             email,
-            userType,
+            type_id,
             balance
         } = req.body;
 
@@ -64,7 +64,7 @@ const createUser: RouteHandler<{Body: CreateUserBody}> = async (req, res) => {
             username,
             password: pass,
             email,
-            userType,
+            type_id,
             balance
         })
 

@@ -1,11 +1,11 @@
 import { create } from "./cases/create";
 import { byCredentials } from "./cases/get";
 
-const User = {
+const Users = {
     get: {
         byCredentials
     },
     create
 }
 
-export default User;
+export default Users;

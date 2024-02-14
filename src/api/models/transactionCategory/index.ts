@@ -1,7 +1,7 @@
 import { create } from "./cases/create";
 import { getCategories, getCategoriesAll } from "./cases/get";
 
-const Category = {
+const Categories = {
     get: {
         all: getCategoriesAll,
         Pagination: getCategories
@@ -9,4 +9,4 @@ const Category = {
     create
 }
 
-export default Category;
+export default Categories;

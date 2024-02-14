@@ -10,14 +10,14 @@ module.exports = {
 	 */
 	async up (queryInterface, sequelize) {
 		const types = [
-			{type: "Person"},
-			{type: "Company"}
+			{type: "Income"},
+			{type: "Outcome"}
 		]
 		
 		const dbData = await queryInterface.sequelize.query(
 			`
 				SELECT TYPE AS COUNT
-				FROM FaUserTypes
+				FROM FaTransactionTypes
 			`,
 			{
 				type: sequelize.QueryTypes.SELECT
@@ -25,7 +25,7 @@ module.exports = {
 		)
 
 		if(dbData.length === 0){
-			await queryInterface.bulkInsert('FaUserTypes', types)
+			await queryInterface.bulkInsert('FaTransactionTypes', types)
 		}
 
 	},

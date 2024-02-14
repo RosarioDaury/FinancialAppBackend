@@ -1,25 +1,26 @@
 import { DataTypes, Model, Optional } from "sequelize";
 import {dbConnection} from '#database';
-import User from "../user/model";
+import User from "../users/model";
+import Transactions from "../transaction/model";
 
 export interface CategoriesAttributes {
     id: number,
     name: string,
-    user: number,
+    user_id: number,
     limit: number,
     createdAt: Date,
     updatedAt: Date
 }
 
 
-export type PartialCategoryAttributes = Partial<CategoriesAttributes>
+export type PartialCategoriesAttributes = Partial<CategoriesAttributes>
 export interface CategoriesCreationAttributes extends Optional<CategoriesAttributes, 'id' | 'createdAt' | 'updatedAt'>{}
 
 class Categories extends Model<CategoriesAttributes, CategoriesCreationAttributes> 
 implements CategoriesAttributes {
     declare id: number;
     declare name: string;
-    declare user: number;
+    declare user_id: number;
     declare limit: number;
     declare createdAt: Date;
     declare updatedAt: Date;
@@ -39,7 +40,7 @@ Categories.init(
             type: DataTypes.STRING(20),
             allowNull: false
         },
-        user: {
+        user_id: {
             type: DataTypes.TINYINT.UNSIGNED,
             allowNull: false
         },
@@ -66,6 +67,6 @@ Categories.init(
 
 
 export const CategoriesTableName = Categories.tableName;
-Categories.hasOne(User, {as: 'user', foreignKey: 'id', sourceKey: 'user'});
+Categories.hasOne(User, {as: 'user', foreignKey: 'id', sourceKey: 'user_id'});
 
 export default Categories;

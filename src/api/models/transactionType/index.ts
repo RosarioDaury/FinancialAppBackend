@@ -1,8 +1,8 @@
 import { getAll, getOne } from "./cases/get";
 
-const TransactionType = {
+const TransactionTypes = {
     getAll,
     getOne
 }
 
-export default TransactionType;
+export default TransactionTypes;

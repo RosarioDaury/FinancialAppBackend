@@ -2,6 +2,7 @@ import { FastifyReply, FastifyRequest } from "fastify";
 import { WithTokenRequest } from "../interfaces/tokenRequestHandler";
 import * as jwt from 'jsonwebtoken'
 import { config } from "#/config/envConfig";
+import { UserJwtPayload } from "jsonwebtoken";
 
 const decodeToken = () => {
     return async function(req: WithTokenRequest<{}>, res: FastifyReply ) {
@@ -12,7 +13,7 @@ const decodeToken = () => {
                 throw new Error('Invalid Token Provided')
             }
 
-            const decoded = await jwt.verify(token, config.SECRETKEY_ACCESS_TOKEN);
+            let decoded = await <UserJwtPayload>jwt.verify(token, config.SECRETKEY_ACCESS_TOKEN);
             req.headers.user = decoded;
             
         } catch(error) {

@@ -1,5 +1,5 @@
 import type { FastifyPluginAsync } from 'fastify';
-import userController from '../controllers/userController';
+import userController from '../controllers/user';
 import V from '#/shared/middlewares/field_validator';
 import handleToken from '#/shared/middlewares/handleToken';
 
@@ -59,14 +59,14 @@ export default <FastifyPluginAsync> async function (app): Promise<void> {
     app.post('/create', {
         schema: {
             body: V.isObject({
-                required: ['firstName', 'lastName', 'password', 'email', 'userType', 'balance'],
+                required: ['firstName', 'lastName', 'password', 'email', 'type_id', 'balance'],
                 properties: {
                     firstName: V.isString({min: 1, max: 50}),
                     lastName: V.isString({min: 1, max: 50}),
                     username: V.isString({min: 1, max: 50}),
                     password: V.isString({min: 1, max: 50}),
                     email: V.isEmail({min: 1, max: 50}),
-                    userType: V.isInteger(),
+                    type_id: V.isInteger(),
                     balance: V.isDouble()
                 },
             }),

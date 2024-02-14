@@ -1,8 +1,8 @@
 import { getAll, getOne } from "./cases/get";
 
-const UserType = {
+const UserTypes = {
     getAll,
     getOne
 }
 
-export default UserType;
+export default UserTypes;

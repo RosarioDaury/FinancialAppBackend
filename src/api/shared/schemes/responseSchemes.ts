@@ -60,18 +60,34 @@ const PAGINATION = {
         },
         pagination: {
             type: 'object',
-            required: ['size', 'page'],
+            required: ['result', 'pages', 'prevPage', 'nextPage'],
             properties: {
-                size: {
+                result: {
                     type: 'integer',
                     nullable: false,
                     minimum: 0
                 },
-                page: {
+                pages: {
                     type: 'integer',
                     nullable: false,
                     mininum: 1
-                }
+                },
+                prevPage: {
+                    type: 'integer',
+                    nullable: false,
+                    mininum: 0
+                },
+                currentPage: {
+                    type: 'integer',
+                    nullable: true,
+                    mininum: 1
+                },
+                nextPage: {
+                    type: 'integer',
+                    nullable: false,
+                    mininum: 0
+                },
+                
             }
         },
         data: {

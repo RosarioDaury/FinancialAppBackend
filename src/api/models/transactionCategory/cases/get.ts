@@ -1,17 +1,17 @@
-import { Op } from "sequelize";
-import Category from "../model";
-import { CategoryAttributes } from "../model";
+import Categories from "../model";
+import { CategoriesAttributes } from "../model";
 import { PaginationReturn } from "#/shared/interfaces/pagination";
+import { dbConnection } from "#database";
 
 type Pagination = (options: {
     id: number,
     page: number,
     pageSize: number
-}) => Promise<PaginationReturn<CategoryAttributes>>
+}) => Promise<PaginationReturn<CategoriesAttributes>>
 
 const getCategories: Pagination = async ({id, page, pageSize}) => {
-    let data: CategoryAttributes[] = []
-    const count: number = await Category.count({
+    let data: CategoriesAttributes[] = []
+    const count: number = await Categories.count({
         where: [
             {
                 id: id
@@ -20,18 +20,16 @@ const getCategories: Pagination = async ({id, page, pageSize}) => {
     });
 
     if(count > 0) {
-        data = await Category.findAll({
-            where: [
-                {id: id}
-            ],
-            order: [['name', 'ASC']],
-            offset: pageSize > 0 ? ((pageSize) * (page - 1)) : undefined,
-            limit: pageSize > 0 ? pageSize : undefined
-        })
+        let limit = pageSize;
+        let offset = (pageSize) * (page - 1)
+
+        const spQuery = `CALL facategories_get(${id}, ${offset}, ${limit});`
+
+        data = await dbConnection.query(spQuery) as CategoriesAttributes[];
     }
 
     const pages = pageSize > 0 ? Math.ceil(count / pageSize) : 1;
-
+    
     return {
         pagination: {
             result: count,
@@ -44,8 +42,8 @@ const getCategories: Pagination = async ({id, page, pageSize}) => {
     }
 }
 
-const getCategoriesAll = async ({id}: {id: number}): Promise<Category[]>=> {
-    const categories = await Category.findAll({
+const getCategoriesAll = async ({id}: {id: number}): Promise<CategoriesAttributes[]>=> {
+    const categories = await Categories.findAll({
         where: [
             {id: id}
         ]

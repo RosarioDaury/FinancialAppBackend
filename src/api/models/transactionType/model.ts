@@ -1,18 +1,18 @@
 import { DataTypes, Model, Optional } from "sequelize";
 import {dbConnection} from '#database';
 
-export interface TransactionTypeAttributes {
+export interface TransactionTypesAttributes {
     id: number,
     type: string,
     createdAt: Date,
     updatedAt: Date
 }
 
-export type PartialTransactionTypesAttributes = Partial<TransactionTypeAttributes>
+export type PartialTransactionTypesAttributes = Partial<TransactionTypesAttributes>
 
-interface TransactionType extends Model<TransactionTypeAttributes> {}
-class TransactionType extends Model<TransactionTypeAttributes>
-implements TransactionTypeAttributes {
+interface TransactionTypes extends Model<TransactionTypesAttributes> {}
+class TransactionTypes extends Model<TransactionTypesAttributes>
+implements TransactionTypesAttributes {
     declare id: number;
     declare type: string;
 
@@ -21,7 +21,7 @@ implements TransactionTypeAttributes {
 }
 
 
-TransactionType.init(
+TransactionTypes.init(
     {
         id: {
             type: DataTypes.TINYINT.UNSIGNED,
@@ -43,12 +43,12 @@ TransactionType.init(
         }
     },
     {
-        tableName: 'FaTransactionType',
+        tableName: 'FaTransactionTypes',
         createdAt: 'createdAt',
         updatedAt: 'updatedAt',
         sequelize: dbConnection
     }
 )
 
-export const TransactionTypeTableName = TransactionType.tableName;
-export default TransactionType;
+export const TransactionTypeTableName = TransactionTypes.tableName;
+export default TransactionTypes;
