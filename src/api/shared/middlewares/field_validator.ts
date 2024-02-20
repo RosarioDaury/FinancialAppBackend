@@ -117,9 +117,27 @@ const isDateOnly: ValidatorType<string, MinMaxDate> = (opts) => {
         formatMaximum: max,
         nullable,
         description,
-
     }
 
+}
+
+
+const isDateTime: ValidatorType<string, MinMaxDate> = opts => {
+    const {
+        min,
+        max,
+        description,
+        nullable = false
+    } = opts ?? {};
+
+    return {
+        type: 'string',
+        format: 'date-time',
+        formatMinimum: min,
+        formatMaximum: max,
+        nullable,
+        description,
+    }
 }
 
 
@@ -202,6 +220,7 @@ export const V = {
     isArray,
     isBoolean,
     isDateOnly,
+    isDateTime,
     isDouble,
     isEmail,
     isInteger,

@@ -4,7 +4,7 @@ import V from '#/shared/middlewares/field_validator';
 import handleToken from '#/shared/middlewares/handleToken';
 
 export default <FastifyPluginAsync> async function (app): Promise<void> {
-
+    // GET
     app.get('/get', {
         schema: {
             response: app.ResponseSchema().HTTP200(V.isObject({
@@ -36,7 +36,6 @@ export default <FastifyPluginAsync> async function (app): Promise<void> {
         preHandler: [ handleToken.decodeToken() ]
     }, userController.getByCredentials)
 
-
     app.get('/get/types', {
         schema: {
             response: app.ResponseSchema().HTTP200(V.isObject({
@@ -56,6 +55,7 @@ export default <FastifyPluginAsync> async function (app): Promise<void> {
     }, userController.getUserTypes)
 
 
+    // POST
     app.post('/create', {
         schema: {
             body: V.isObject({
@@ -80,7 +80,6 @@ export default <FastifyPluginAsync> async function (app): Promise<void> {
         }
     }, userController.createUser)
 
-
     app.post('/auth', {
         schema: {
             body: V.isObject({
@@ -99,4 +98,38 @@ export default <FastifyPluginAsync> async function (app): Promise<void> {
             }))
         }
     }, userController.authUser)
+
+
+    //PUT
+    app.put('/update', {
+        schema: {
+            headers: V.isObject({
+                required: ['token'],
+                properties: {
+                    token: V.isString()
+                }
+            }),
+            body: V.isObject({
+                properties: {
+                    firstName: V.isString({min: 1, max: 50}),
+                    lastName: V.isString({min: 1, max: 50}),
+                    username: V.isString({min: 1, max: 50}),
+                    password: V.isString({min: 1, max: 50}),
+                    email: V.isEmail({min: 1, max: 50}),
+                    type_id: V.isInteger(),
+                    balance: V.isDouble(),
+                    active: V.isBoolean()
+                },
+            }),
+            response: app.ResponseSchema().HTTP200(V.isObject({
+                required: ['message', 'id', 'token'],
+                properties: {
+                    message: V.isString(),
+                    id: V.isInteger(),
+                    token: V.isString()
+                }
+            }))
+        },
+        preHandler: [handleToken.decodeToken()]
+    }, userController.updateUser)
 }

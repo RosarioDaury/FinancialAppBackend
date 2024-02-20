@@ -29,25 +29,20 @@ const get: Pagination = async ({userId, page, pageSize, search}) => {
             where: {
                 [Op.and]: [
                     {user_id: userId},
-                    {
-                        [Op.or]: [
-                            search.title ? {title: search.title} : {},
-                            search.lastMonth 
-                                ? 
-                                    {
-                                        date: {
-                                            [Op.gte]: new Date(new Date().getFullYear(), new Date().getMonth(), 1),
-                                            [Op.lt]: new Date(new Date().getFullYear(), new Date().getMonth() + 1, 1),
-                                        }
-                                    } 
-                                : 
-                                    {},
-                            search.date ? { date : search.date} : {}
-                        ]
-                    }
+                    search.title ? {title: search.title} : {},
+                    search.lastMonth 
+                    ? 
+                        {
+                            date: {
+                                [Op.gte]: new Date(new Date().getFullYear(), new Date().getMonth(), 1),
+                                [Op.lt]: new Date(new Date().getFullYear(), new Date().getMonth() + 1, 1),
+                            }
+                        } 
+                    : 
+                        {},
+                    search.date ? { date : search.date} : {}
                 ]
             },
-            order: [['name', 'ASC']],
             offset: pageSize > 0 ? ((pageSize) * (page - 1)) : undefined,
             limit: pageSize > 0 ? pageSize : undefined
         })
@@ -96,25 +91,21 @@ const getByType: PaginationByType = async ({userId, type, page, pageSize, search
                 [Op.and]: [
                     {user_id: userId},
                     {type_id: type},
-                    {
-                        [Op.or]: [
-                            search.title ? {title: search.title} : {},
-                            search.lastMonth 
-                                ? 
-                                    {
-                                        date: {
-                                            [Op.gte]: new Date(new Date().getFullYear(), new Date().getMonth(), 1),
-                                            [Op.lt]: new Date(new Date().getFullYear(), new Date().getMonth() + 1, 1),
-                                        }
-                                    } 
-                                : 
-                                    {},
-                            search.date ? { date : search.date} : {}
-                        ]
-                    }
+                    search.title ? {title: search.title} : {},
+                    search.lastMonth 
+                        ? 
+                            {
+                                date: {
+                                    [Op.gte]: new Date(new Date().getFullYear(), new Date().getMonth(), 1),
+                                    [Op.lt]: new Date(new Date().getFullYear(), new Date().getMonth() + 1, 1),
+                                }
+                            } 
+                        : 
+                            {},
+                    search.date ? { date : search.date} : {}
                 ]
             },
-            order: [['name', 'ASC']],
+            order: [['date', 'ASC']],
             offset: pageSize > 0 ? ((pageSize) * (page - 1)) : undefined,
             limit: pageSize > 0 ? pageSize : undefined
         })

@@ -1,9 +1,10 @@
-import User from "#/models/users";
+import Users from "#/models/users";
 import UserType from "#/models/userTypes";
 import { comparePassword, encryptPassword } from "#/shared/helpers/encryptPasswords";
 import { encryptUserJwt } from "#/shared/helpers/jwtHandler";
 import { TokenRequestHandler } from "#/shared/interfaces/tokenRequestHandler";
 import { RouteHandler } from "fastify";
+import { UsersCreationAttributes } from "#/models/users/model";
 
 const getByCredentials: TokenRequestHandler<{}> = async (req, res) => {
     try {
@@ -47,7 +48,7 @@ const createUser: RouteHandler<{Body: CreateUserBody}> = async (req, res) => {
             balance
         } = req.body;
 
-        const user = await User.get.byCredentials({ username, email })
+        const user = await Users.get.byCredentials({ username, email })
 
         if(user) {
             return res.res4xx({
@@ -58,7 +59,7 @@ const createUser: RouteHandler<{Body: CreateUserBody}> = async (req, res) => {
         
         let pass = await encryptPassword(password);
 
-        await User.create({
+        await Users.create({
             firstName,
             lastName,
             username,
@@ -94,7 +95,7 @@ const authUser: RouteHandler<{Body: {username: string, password: string}}> = asy
             password
         } = req.body
 
-        const user = await User.get.byCredentials({username});
+        const user = await Users.get.byCredentials({username});
 
         if(!user){
             return res.res4xx({
@@ -149,9 +150,57 @@ const getUserTypes: RouteHandler =  async (req, res) => {
     }  
 }
 
+const updateUser: TokenRequestHandler<{Body: UsersCreationAttributes}> = async (req, res) => {
+    try {
+        const {user} = req.headers;
+        const {
+            firstName,
+            lastName,
+            username,
+            password,
+            email,
+            type_id,
+            balance,
+            active,
+        } = req.body;
+
+        await Users.update({id: user.id, updated: {
+            firstName,
+            lastName,
+            username,
+            password,
+            email,
+            type_id,
+            balance,
+            active,
+        }})
+
+        const userUpdated = await Users.get.byCredentials({username: user.username});
+        const token = await encryptUserJwt(userUpdated!);
+
+        res.res200({
+            message: 'User Updated',
+            id: user.id,
+            token
+        })
+
+    } catch(error) {
+        res.registerError({
+            title: "Update User Error",
+            code: 'u-5',
+            error: String(error)
+        })
+
+        return res.res500({
+            error: String(error)
+        })
+    }
+}
+
 export default {
     getByCredentials,
     createUser,
     authUser,
-    getUserTypes
+    getUserTypes,
+    updateUser
 }

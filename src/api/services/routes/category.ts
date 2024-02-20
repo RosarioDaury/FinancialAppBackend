@@ -50,7 +50,8 @@ export default <FastifyPluginAsync> async function (app): Promise<void> {
                 required: ['message'],
                 properties: {
                     success: V.isBoolean(),
-                    message: V.isString()
+                    message: V.isString(),
+                    id: V.isInteger()
                 }
             }))
         },

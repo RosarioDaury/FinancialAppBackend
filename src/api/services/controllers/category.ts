@@ -35,14 +35,16 @@ const create: TokenRequestHandler<{Body: CreationAttributes}> = async (req, res)
             user_id: user.id,
             limit
         }
-        await Categories.create(newCategory);
+
+        const category = await Categories.create(newCategory);
         res.res200({
+            id: category.id,
             message: 'Category Created'
         })
 
     } catch(error) {
         res.registerError({
-            title: "[Error] CREATE CATEGORIES",
+            title: "[Error] CREATE CATEGORY",
             code: 'c-2',
             error: String(error)
         })

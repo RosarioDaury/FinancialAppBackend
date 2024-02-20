@@ -1,10 +1,11 @@
 import { create } from "./cases/create";
-import { getCategories, getCategoriesAll } from "./cases/get";
+import { getCategories, getCategoriesAll, getCategoryById } from "./cases/get";
 
 const Categories = {
     get: {
         all: getCategoriesAll,
-        Pagination: getCategories
+        Pagination: getCategories,
+        byId: getCategoryById
     },
     create
 }

@@ -52,8 +52,20 @@ const getCategoriesAll = async ({id}: {id: number}): Promise<CategoriesAttribute
     return categories;
 }
 
+const getCategoryById = async ({id}: {id: number}): Promise<CategoriesAttributes> => {
+    const category = await Categories.findOne({
+        where: [{
+            id: id
+        }]
+    })
+
+    return category!;
+}
+
+
 export {
     getCategories,
-    getCategoriesAll
+    getCategoriesAll,
+    getCategoryById
 }
 

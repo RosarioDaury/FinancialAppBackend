@@ -1,8 +1,11 @@
-import { getAll, getOne } from "./cases/get";
+import { getAll, getOne, getTotalByTypes } from "./cases/get";
 
 const TransactionTypes = {
-    getAll,
-    getOne
+    get: {
+        getAll,
+        getOne,
+        getTotalByTypes
+    }
 }
 
 export default TransactionTypes;
