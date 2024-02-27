@@ -98,8 +98,7 @@ const authUser: RouteHandler<{Body: {username: string, password: string}}> = asy
         const user = await Users.get.byCredentials({username});
 
         if(!user){
-            return res.res4xx({
-                httpCode: 401,
+            return res.res500({
                 error: "Username or Password incorrect"
             })
         }
@@ -107,8 +106,7 @@ const authUser: RouteHandler<{Body: {username: string, password: string}}> = asy
         let pass = await comparePassword(password, user.password);
 
         if(!pass){
-            return res.res4xx({
-                httpCode: 401,
+            return res.res500({
                 error: "Username or Password incorrect"
             })
         }
@@ -175,7 +173,7 @@ const updateUser: TokenRequestHandler<{Body: UsersCreationAttributes}> = async (
             active,
         }})
 
-        const userUpdated = await Users.get.byCredentials({username: user.username});
+        const userUpdated = await Users.get.byCredentials({username: username});
         const token = await encryptUserJwt(userUpdated!);
 
         res.res200({

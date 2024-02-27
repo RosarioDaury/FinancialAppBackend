@@ -25,20 +25,44 @@ module.exports = {
 			await queryInterface.sequelize.query(`DROP PROCEDURE IF EXISTS facategories_get;`)
 
 			await queryInterface.sequelize.query(`
-				CREATE PROCEDURE facategories_get
-				(
+				CREATE PROCEDURE facategories_get (
 					_userid INTEGER,
 					_offset INTEGER,
 					_limit INTEGER
 				)
-				
-					SELECT C.id, C.name, C.limit, C.createdAt, SUM(T.amount) AS total
+					SELECT C.id, C.name, C.limit, C.createdAt,
+					(
+						SELECT SUM(T.amount)
+						FROM fatransactions as T
+						WHERE T.category_id = C.id
+					) as total
 					FROM facategories AS C
-					JOIN fatransactions AS T ON T.category_id = C.id
-					WHERE C.id = _userid
+					WHERE C.user_id = _userid
 					GROUP BY C.id
 					LIMIT _offset , _limit;
 			
+			
+			`)
+
+
+			await queryInterface.sequelize.query(`
+				CREATE PROCEDURE facategories_get_filter_name (
+					_userid INTEGER,
+					_offset INTEGER,
+					_limit INTEGER,
+					_name VARCHAR(50)
+				)
+					SELECT C.id, C.name, C.limit, C.createdAt,
+					(
+						SELECT SUM(T.amount)
+						FROM fatransactions as T
+						WHERE T.category_id = C.id
+					) as total
+					FROM facategories AS C
+					WHERE C.user_id = _userid
+					AND C.name LIKE CONCAT('%', _name, '%')
+					GROUP BY C.id
+					LIMIT _offset , _limit;
 			`)
 
 		} catch(err) {

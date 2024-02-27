@@ -3,7 +3,7 @@ import { config } from "#/config/envConfig";
 import { UsersAttributes } from '#/models/users/model';
 
 const encryptUserJwt = async (User: UsersAttributes) => {
-    const token = await jwt.sign(User, config.SECRETKEY_ACCESS_TOKEN, { expiresIn: '1d' });
+    const token = await jwt.sign(User, config.SECRETKEY_ACCESS_TOKEN);
     return token
 }
 

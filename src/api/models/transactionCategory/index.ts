@@ -1,5 +1,6 @@
 import { create } from "./cases/create";
 import { getCategories, getCategoriesAll, getCategoryById } from "./cases/get";
+import { remove } from "./cases/remove";
 
 const Categories = {
     get: {
@@ -7,7 +8,8 @@ const Categories = {
         Pagination: getCategories,
         byId: getCategoryById
     },
-    create
+    create, 
+    remove
 }
 
 export default Categories;

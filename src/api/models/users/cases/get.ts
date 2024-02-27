@@ -4,7 +4,7 @@ import { UsersAttributes } from "../model";
 
 export const byCredentials =  async ({username, email}: {username?: string, email?: string}): Promise<UsersAttributes | null> => {
     const users = await User.findOne({
-        attributes: ['id', 'firstName', 'lastName', 'username', 'password', 'email', 'active', 'balance'],
+        attributes: ['id', 'firstName', 'lastName', 'username', 'password', 'email', 'active', 'balance', 'createdAt'],
         where: {
             [Op.or]: [
                 email ? { email } : { email: '!^' },

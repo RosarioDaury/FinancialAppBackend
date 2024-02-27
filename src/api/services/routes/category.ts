@@ -15,7 +15,8 @@ export default <FastifyPluginAsync> async function (app): Promise<void> {
             querystring: V.isObject({
                 properties: {
                     page: V.isInteger(),
-                    pageSize: V.isInteger()
+                    pageSize: V.isInteger(),
+                    name: V.isString()
                 }
             }),
             params: V.isObject({
@@ -57,4 +58,30 @@ export default <FastifyPluginAsync> async function (app): Promise<void> {
         },
         preHandler: [handleToken.decodeToken()]
     }, categoryController.create)
+
+    app.delete('/delete/:id', {
+        schema: {
+            headers: V.isObject({
+                required: ['token'],
+                properties: {
+                    token: V.isString()
+                }
+            }),
+            params: V.isObject({
+                required: ['id'],
+                properties: {
+                    id: V.isInteger()
+                }
+            }),
+            response: app.ResponseSchema().HTTP200(V.isObject({
+                required: ['message'],
+                properties: {
+                    success: V.isBoolean(),
+                    message: V.isString(),
+                    id: V.isInteger()
+                }
+            }))
+        },
+        preHandler: [handleToken.decodeToken()]
+    }, categoryController.deleteCategory)
 }
