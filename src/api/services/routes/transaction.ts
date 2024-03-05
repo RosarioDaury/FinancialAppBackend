@@ -26,7 +26,6 @@ export default <FastifyPluginAsync> async function (app): Promise<void> {
         }
     }, TransactionController.getTransactionTypes)
 
-
     app.get('/types/total', {
         schema: {   
             headers: V.isObject({

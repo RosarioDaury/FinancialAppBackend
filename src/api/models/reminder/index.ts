@@ -11,3 +11,5 @@ const Reminders = {
     update,
     remove
 }
+
+export default Reminders;

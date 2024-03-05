@@ -1,7 +1,8 @@
 import type { FastifyPluginAsync } from 'fastify';
 import userRoutes from './user';
 import categoryRoutes from './category';
-import transactionController from './transaction';
+import transactionRoutes from './transaction';
+import intervalRoutes from './reminderIntervals';
 
 export default <FastifyPluginAsync> async function (app): Promise<void> {
     await app.register(userRoutes, {
@@ -12,7 +13,11 @@ export default <FastifyPluginAsync> async function (app): Promise<void> {
         prefix: '/category'
     })
 
-    await app.register(transactionController, {
+    await app.register(transactionRoutes, {
         prefix: '/transaction'
+    })
+
+    await app.register(intervalRoutes, {
+        prefix: '/interval'
     })
 }   

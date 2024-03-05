@@ -1,6 +1,5 @@
 import Transactions from "#/models/transaction";
 import { TransactionsCreationAttributes } from "#/models/transaction/model";
-import Categories from "#/models/transactionCategory";
 import TransactionTypes from "#/models/transactionType";
 import Users from "#/models/users";
 import { encryptUserJwt } from "#/shared/helpers/jwtHandler";
