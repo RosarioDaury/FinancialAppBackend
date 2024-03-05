@@ -1,5 +1,5 @@
 import { Op } from "sequelize";
-import Transactions, {TransactionsAttributes} from "../model";
+import Transactions, {TransactionsAttributes} from "#/models/transaction/model";
 import { PaginationReturn } from "#/shared/interfaces/pagination";
 
 type Pagination = (options: {

@@ -1,5 +1,4 @@
-import Users from "../model";
-import { PartialUsersAttributes } from "../model";
+import Users, { PartialUsersAttributes } from "#/models/users/model";
 
 type UpdateType = ({id, updated}: {id: number, updated: PartialUsersAttributes}) => Promise<number[]>
 

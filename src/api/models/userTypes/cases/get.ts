@@ -1,4 +1,4 @@
-import { PartialUserTypesAttributes } from "../model";
+import { PartialUserTypesAttributes } from "#/models/userTypes/model";
 
 const UserTypes: PartialUserTypesAttributes[] = [
     {

@@ -1,5 +1,5 @@
-import Category from "../model";
-import { CategoriesAttributes, CategoriesCreationAttributes } from "../model";
+import Category from "#/models/transactionCategory/model";
+import { CategoriesAttributes, CategoriesCreationAttributes } from "#/models/transactionCategory/model";
 
 interface CreationAttributes extends Omit<CategoriesCreationAttributes, 'id' | 'createdAt' | 'updatedAt'> {}
 

@@ -1,5 +1,4 @@
-import Categories from "../model";
-import { CategoriesAttributes } from "../model";
+import Categories, { CategoriesAttributes } from "#/models/transactionCategory/model";
 import { PaginationReturn } from "#/shared/interfaces/pagination";
 import { dbConnection } from "#database";
 

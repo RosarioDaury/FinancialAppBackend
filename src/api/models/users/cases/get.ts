@@ -1,6 +1,5 @@
 import { Op } from "sequelize";
-import User from "../model";
-import { UsersAttributes } from "../model";
+import User, { UsersAttributes } from "#/models/users/model";
 
 export const byCredentials =  async ({username, email}: {username?: string, email?: string}): Promise<UsersAttributes | null> => {
     const users = await User.findOne({

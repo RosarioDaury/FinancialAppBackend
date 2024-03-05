@@ -1,7 +1,6 @@
 import { DataTypes, Model, Optional } from "sequelize";
 import {dbConnection} from '#database';
-import User from "../users/model";
-import Transactions from "../transaction/model";
+import User from "#/models/users/model";
 
 export interface CategoriesAttributes {
     id: number,

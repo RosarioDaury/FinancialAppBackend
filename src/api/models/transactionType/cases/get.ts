@@ -1,6 +1,5 @@
-import Transactions from "#/models/transaction/model";
-import { PartialTransactionTypesAttributes } from "../model";
-import { TransactionsAttributes } from "#/models/transaction/model";
+import { PartialTransactionTypesAttributes } from "#/models/transactionType/model";
+import Transactions, { TransactionsAttributes } from "#/models/transaction/model";
 import { dbConnection } from "#database";
 const TransactionTypes: PartialTransactionTypesAttributes[] = [
     {

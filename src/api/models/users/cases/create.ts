@@ -1,5 +1,5 @@
 import User from "../model";
-import { UsersAttributes, UsersCreationAttributes } from "../model";
+import { UsersAttributes, UsersCreationAttributes } from "#/models/users/model";
 
 interface CreationAttributes extends Omit<UsersCreationAttributes, 'id' | "active" | 'createdAt' | 'updatedAt'> {}
 

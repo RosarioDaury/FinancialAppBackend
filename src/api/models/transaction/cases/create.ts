@@ -1,6 +1,5 @@
 import { dbConnection } from "#database";
-import Transactions from "../model";
-import { TransactionsAttributes, TransactionsCreationAttributes } from "../model";
+import Transactions, { TransactionsAttributes, TransactionsCreationAttributes } from "#/models/transaction/model";
 
 interface CreationAttributes extends Omit<TransactionsCreationAttributes, 'id' | 'createdAt' | 'updatedAt'> {}
 

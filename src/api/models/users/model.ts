@@ -1,6 +1,6 @@
 import { DataTypes, Model, Optional } from "sequelize";
 import {dbConnection} from '#database';
-import UserType from "../userTypes/model";
+import UserType from "#/models/userTypes/model";
 
 export interface UsersAttributes {
     id: number,
