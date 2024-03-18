@@ -37,7 +37,6 @@ export default <FastifyPluginAsync> async function (app): Promise<void> {
         preHandler: [handleToken.decodeToken()]
     }, categoryController.getCategories)
 
-
     app.post('/create', {
         schema: {
             body: V.isObject({

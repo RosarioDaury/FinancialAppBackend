@@ -58,8 +58,8 @@ module.exports = {
 				type: 'foreign key',
 				name: 'facategories_fk_userid',
 				references: { field: 'id', table: 'FaUsers'},
-				onDelete: 'restrict',
-				onUpdate: 'restrict'
+				onDelete: 'cascade',
+				onUpdate: 'cascade'
 			});
 
 			await queryInterface.addIndex('FaCategories', {

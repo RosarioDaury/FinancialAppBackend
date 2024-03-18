@@ -9,7 +9,7 @@ type Pagination = (params: {
     title: string
 }) => Promise<PaginationReturn<ReminderAttributes>>;
 
-const getPagination: Pagination = async ({userid, page, pageSize, title}) => {
+const getPagination: Pagination = async ({userid, page = 1, pageSize = 6, title}) => {
     let records: ReminderAttributes[] = [];
     const count = await Reminders.count({
         where: [
@@ -22,11 +22,17 @@ const getPagination: Pagination = async ({userid, page, pageSize, title}) => {
             where: {
                 [Op.and]: [
                     {user_id: userid},
-                    title ? {title: title} : {}
+                    title ? {title: { [Op.like]: `%${title}%` }} : {},
                 ]
             },
             offset: pageSize > 0 ? ((pageSize) * (page - 1)) : undefined,
-            limit: pageSize > 0 ? pageSize : undefined
+            limit: pageSize > 0 ? pageSize : undefined,
+            include: [
+                {
+                    association: 'interval',
+                    attributes: ['id', 'title']
+                }
+            ]
         })
     }
 

@@ -14,9 +14,10 @@ const getReminders: TokenRequestHandler<{Querystring: {page: number, pageSize: n
             title
         } = req.query;
 
-        const reminders = await Reminders.get.getPagination({userid: id, page, pageSize, title});
+        const {data, pagination} = await Reminders.get.getPagination({userid: id, page, pageSize, title});
         return res.res200({
-            data: reminders
+            data,
+            pagination
         })
 
     } catch(error) {
@@ -68,6 +69,7 @@ const createRemider: TokenRequestHandler<{Body: ReminderCreationAttributes}> = a
 const updateReminder: TokenRequestHandler<{Body: ReminderCreationAttributes, Params: {id: number}}> = async (req, res) => {
     try {
         const {
+            date,
             amount, 
             interval_id,
             title,
@@ -75,7 +77,7 @@ const updateReminder: TokenRequestHandler<{Body: ReminderCreationAttributes, Par
         } = req.body;
 
         const { id } = req.params
-        await Reminders.update({id, reminder: {amount, interval_id, title, description}});
+        await Reminders.update({id, reminder: {date, amount, interval_id, title, description}});
 
         res.res200({
             message: 'Reminder Updated',

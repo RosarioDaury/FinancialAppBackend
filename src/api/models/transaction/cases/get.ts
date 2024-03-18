@@ -29,7 +29,7 @@ const get: Pagination = async ({userId, page, pageSize, search}) => {
             where: {
                 [Op.and]: [
                     {user_id: userId},
-                    search.title ? {title: search.title} : {},
+                    search.title ? {title: { [Op.like]: `%${search.title}%` }} : {},
                     search.lastMonth 
                     ? 
                         {
@@ -91,7 +91,7 @@ const getByType: PaginationByType = async ({userId, type, page, pageSize, search
                 [Op.and]: [
                     {user_id: userId},
                     {type_id: type},
-                    search.title ? {title: search.title} : {},
+                    search.title ? {title: { [Op.like]: `%${search.title}%` }} : {},
                     search.lastMonth 
                         ? 
                             {
@@ -144,7 +144,7 @@ const getByCategory: PaginationByType = async ({userId, type, page, pageSize, se
                     {category_id: type},
                     {
                         [Op.or]: [
-                            search.title ? {title: search.title} : {},
+                            search.title ? {title: { [Op.like]: `%${search.title}%` }} : {},
                             search.lastMonth 
                                 ? 
                                     {

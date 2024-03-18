@@ -14,18 +14,29 @@ export default <FastifyPluginAsync> async function (app): Promise<void> {
                 }
             }),
             querystring: V.isObject({
-                required: ['page', 'pageSize'],
                 properties: {
                     page: V.isInteger(),
                     pageSize: V.isInteger(),
                     title: V.isString()
                 }
             }),
-            response: app.ResponseSchema().HTTP200(V.isObject({
-                required: [],
+            response: app.ResponseSchema().PAGINATION(V.isObject({
                 properties: {
-
-                }   
+                    id: V.isInteger(),
+                    user_id: V.isInteger(),
+                    amount: V.isDouble(),
+                    interval: V.isObject({
+                        properties: {
+                            id: V.isInteger(),
+                            title: V.isString()
+                        }
+                    }),
+                    date: V.isDateTime(),
+                    title: V.isString(),
+                    description: V.isString(),
+                    createdAt: V.isDateTime(),
+                    updatedAt: V.isDateTime()
+                } 
             }))
         },
         preHandler: [handleToken.decodeToken()]
@@ -63,7 +74,7 @@ export default <FastifyPluginAsync> async function (app): Promise<void> {
     }, reminderControllers.createRemider)
 
     // PUT
-    app.put('/update', {
+    app.put('/update/:id', {
         schema: {
             headers: V.isObject({
                 required: ['token'],
@@ -71,8 +82,15 @@ export default <FastifyPluginAsync> async function (app): Promise<void> {
                     token: V.isString()
                 }
             }),
+            params: V.isObject({
+                required: ['id'],
+                properties: {
+                    id: V.isInteger()
+                }
+            }),
             body: V.isObject({
                 properties: {
+                    date: V.isDateTime(),
                     amount: V.isDouble(),
                     interval_id: V.isInteger(),
                     title: V.isString({min: 1, max: 50}),

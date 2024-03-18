@@ -25,22 +25,23 @@ export default <FastifyPluginAsync> async function (app): Promise<void> {
         }
     }, intervalControllers.getReminderIntervals)
 
-    app.get('/delete/:id', {
-        schema: {
-            params: V.isObject({
-                required: ['id'],
-                properties: {
-                    id: V.isInteger()
-                }
-            }),
-            response: app.ResponseSchema().HTTP200(V.isObject({
-                required: ['success', 'message'],
-                properties: {
-                    success: V.isBoolean(),
-                    id: V.isInteger(),
-                    message: V.isString(),
-                }
-            }))
-        }
-    }, intervalControllers.removeReminderIntervals)
+    // // DELETE
+    // app.delete('/delete/:id', {
+    //     schema: {
+    //         params: V.isObject({
+    //             required: ['id'],
+    //             properties: {
+    //                 id: V.isInteger()
+    //             }
+    //         }),
+    //         response: app.ResponseSchema().HTTP200(V.isObject({
+    //             required: ['success', 'message'],
+    //             properties: {
+    //                 success: V.isBoolean(),
+    //                 id: V.isInteger(),
+    //                 message: V.isString(),
+    //             }
+    //         }))
+    //     }
+    // }, intervalControllers.removeReminderIntervals)
 }    

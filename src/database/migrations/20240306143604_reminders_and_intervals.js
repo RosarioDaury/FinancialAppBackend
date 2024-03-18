@@ -9,9 +9,8 @@ const Sequelize = require('sequelize');
  * @param {boolean} force
  */
 const downMethod = async (queryInterface, sequelize, force) => {
-	await queryInterface.dropTable('FaTransactionTypes', {force: true});
-	await queryInterface.dropTable('FaTransactions', {force: true});
-
+	await queryInterface.dropTable('FaReminders');
+	await queryInterface.dropTable('FaReminderIntervals');
 }
 
 
@@ -24,18 +23,20 @@ module.exports = {
 
 		try {
 
-			// TABLE CREATION
-			await queryInterface.createTable('FaTransactionTypes', {
+			await queryInterface.createTable('FaReminderIntervals', {
 				id: {
 					type: sequelize.DataTypes.TINYINT.UNSIGNED,
 					primaryKey: true,
-					autoIncrement: true,
 					allowNull: false
 				},
-				type: {
+				title: {
 					type: sequelize.DataTypes.STRING(20),
 					allowNull: false
 				},
+				interval: {
+					type: sequelize.DataTypes.INTEGER,
+					allowNull: false
+				},  
 				createdAt: {
 					type: 'TIMESTAMP',
 					allowNull: false,
@@ -46,9 +47,9 @@ module.exports = {
 					allowNull: false,
 					defaultValue: sequelize.literal('CURRENT_TIMESTAMP')
 				}
-			})
+			});
 
-			await queryInterface.createTable('FaTransactions', {
+			await queryInterface.createTable('FaReminders', {
 				id: {
 					type: sequelize.DataTypes.TINYINT.UNSIGNED,
 					primaryKey: true,
@@ -56,6 +57,14 @@ module.exports = {
 					allowNull: false
 				},
 				user_id: {
+					type: sequelize.DataTypes.TINYINT.UNSIGNED,
+					allowNull: false
+				},
+				amount: {
+					type: sequelize.DataTypes.DOUBLE(),
+					allowNull: false
+				},
+				interval_id: {
 					type: sequelize.DataTypes.TINYINT.UNSIGNED,
 					allowNull: false
 				},
@@ -71,18 +80,6 @@ module.exports = {
 					type: sequelize.DataTypes.STRING(100),
 					allowNull: false
 				},
-				amount: {
-					type: sequelize.DataTypes.DOUBLE(),
-					allowNull: false
-				},
-				type_id: {
-					type: sequelize.DataTypes.TINYINT.UNSIGNED,
-					allowNull: false
-				},
-				category_id: {
-					type: sequelize.DataTypes.TINYINT.UNSIGNED,
-					allowNull: true,
-				},
 				createdAt: {
 					type: 'TIMESTAMP',
 					allowNull: false,
@@ -93,45 +90,33 @@ module.exports = {
 					allowNull: false,
 					defaultValue: sequelize.literal('CURRENT_TIMESTAMP')
 				}
-			})
+			});
 
-			// FOREIGN KEYS
-			await queryInterface.addConstraint('FaTransactions', {
+
+			// FOREING KEYS
+			await queryInterface.addConstraint('FaReminders', {
 				fields: ['user_id'],
 				type: 'foreign key',
 				references: {field: 'id', table: 'FaUsers'},
 				onDelete: 'cascade',
 				onUpdate: 'cascade'
-			});
+			})
 
-			await queryInterface.addConstraint('FaTransactions', {
-				fields: ['type_id'],
+			await queryInterface.addConstraint('FaReminders', {
+				fields: ['interval_id'],
 				type: 'foreign key',
-				references: {field: 'id', table: 'FaTransactionTypes'},
+				references: {field: 'id', table: 'FaReminderIntervals'},
 				onDelete: 'cascade',
 				onUpdate: 'cascade'
-			});
+			})
 
-			await queryInterface.addConstraint('FaTransactions', {
-				fields: ['category_id'],
-				type: 'foreign key',
-				references: {field: 'id', table: 'FaCategories'},
-				onDelete: 'cascade',
-				onUpdate: 'cascade'
-			});
+			// INDEXES
 
-			// INDEXES	
-			await queryInterface.addIndex('FaTransactions', {
+			await queryInterface.addIndex('FaReminders', {
 				fields: ['title'],
-				name: 'fatransactions_idx_fulltext',
+				name: 'fareminders_idx_fulltext',
 				type: 'FULLTEXT'
 			})
-
-			await queryInterface.addIndex('FaTransactions', {
-				fields: ['date'],
-				name: 'fatransactions_idx_date',
-			})
-
 
 		} catch(err) {
 			await downMethod(queryInterface, sequelize, true)
