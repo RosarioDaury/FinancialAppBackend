@@ -29,7 +29,6 @@ module.exports = {
 				id: {
 					type: sequelize.DataTypes.TINYINT.UNSIGNED,
 					primaryKey: true,
-					autoIncrement: true,
 					allowNull: false
 				},
 				type: {

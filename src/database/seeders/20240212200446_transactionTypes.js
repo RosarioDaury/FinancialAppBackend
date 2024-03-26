@@ -10,8 +10,8 @@ module.exports = {
 	 */
 	async up (queryInterface, sequelize) {
 		const types = [
-			{type: "Income"},
-			{type: "Outcome"}
+			{id: 1, type: "Income"},
+			{id: 2, type: "Outcome"}
 		]
 		
 		const dbData = await queryInterface.sequelize.query(

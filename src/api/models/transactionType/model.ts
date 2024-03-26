@@ -26,7 +26,6 @@ TransactionTypes.init(
         id: {
             type: DataTypes.TINYINT.UNSIGNED,
             primaryKey: true,
-            autoIncrement: true,
             allowNull: false
         },
         type: {

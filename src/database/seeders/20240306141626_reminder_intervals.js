@@ -21,9 +21,9 @@ module.exports = {
 	async up (queryInterface, sequelize) {
 		try {
 			const intervals = [
-				{ title: "Weekly", interval: 7 },
-				{ title: "Biweekly", interval: 15},
-				{ title: "Monthly", interval: 30},
+				{ id: 1, title: "Weekly", interval: 7 },
+				{ id: 2, title: "Biweekly", interval: 15},
+				{ id: 3, title: "Monthly", interval: 30},
 			];
 
 			const dbData = await queryInterface.sequelize.query(
