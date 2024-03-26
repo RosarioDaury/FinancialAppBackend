@@ -52,7 +52,7 @@ export class Server implements IServer<Server> {
     async listen() {
         await this.app.listen({
             port: Number(this.port),
-            host: '192.168.0.107',
+            host: config.HOST,
             listenTextResolver: (address) => {
                 return `Listening to "${config.PROJECTNAME}" on ${address}`
             }

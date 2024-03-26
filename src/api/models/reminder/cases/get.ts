@@ -51,6 +51,25 @@ const getPagination: Pagination = async ({userid, page = 1, pageSize = 6, title}
     }
 }
 
+type ById = (params: {
+    userId: number,
+    id: number
+}) => Promise<ReminderAttributes>;
+
+const byId: ById = async ({userId, id}) => {
+    const record = await Reminders.findOne({
+        where: {
+            [Op.and]: {
+                user_id: userId,
+                id: id
+            }
+        }
+    });
+
+    return record as ReminderAttributes
+}   
+
 export {
-    getPagination
+    getPagination,
+    byId
 }

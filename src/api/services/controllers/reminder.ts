@@ -33,6 +33,33 @@ const getReminders: TokenRequestHandler<{Querystring: {page: number, pageSize: n
     }
 }   
 
+const getReminderById: TokenRequestHandler<{Params: {id: number}}> = async (req, res) => {
+    try {
+        const {
+            user
+        } = req.headers;
+
+        const {id} = req.params;
+
+        const data = await Reminders.get.byId({userId: user.id, id})
+        return res.res200({
+            data
+        });
+
+        
+    } catch(error) {
+        res.registerError({
+            title: "[Error] GET REMINDERS BY ID",
+            code: 'R-1',
+            error: String(error)
+        })  
+
+        return res.res500({
+            error: String(error)
+        })
+    }
+}
+
 const createRemider: TokenRequestHandler<{Body: ReminderCreationAttributes}> = async (req, res) => {
     try{
         const {
@@ -121,6 +148,7 @@ const removeReminder : TokenRequestHandler<{Params: {id: number}}> = async (req,
 
 export default {
     getReminders,
+    getReminderById,
     createRemider,
     updateReminder,
     removeReminder

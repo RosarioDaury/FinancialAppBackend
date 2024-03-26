@@ -42,6 +42,42 @@ export default <FastifyPluginAsync> async function (app): Promise<void> {
         preHandler: [handleToken.decodeToken()]
     }, reminderControllers.getReminders)
 
+    app.get('/get/:id', {
+        schema: {
+            headers: V.isObject({
+                required: ['token'],
+                properties: {
+                    token: V.isString()
+                }
+            }),
+            querystring: V.isObject({
+                properties: {
+                    page: V.isInteger(),
+                    pageSize: V.isInteger(),
+                    title: V.isString()
+                }
+            }),
+            response: app.ResponseSchema().HTTP200(V.isObject({
+                required: ['data'],
+                properties: {
+                    data: V.isObject({
+                        properties: {
+                            id: V.isInteger(),
+                            user_id: V.isInteger(),
+                            amount: V.isDouble(),
+                            date: V.isDateTime(),
+                            title: V.isString(),
+                            description: V.isString(),
+                            createdAt: V.isDateTime(),
+                            updatedAt: V.isDateTime()
+                        }
+                    })
+                } 
+            }))
+        },
+        preHandler: [handleToken.decodeToken()]
+    }, reminderControllers.getReminderById)
+
     // POST
     app.post('/create', {
         schema: {

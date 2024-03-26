@@ -38,7 +38,7 @@ module.exports = {
 					allowNull: false
 				},
 				limit: {
-					type: sequelize.DataTypes.INTEGER,
+					type: sequelize.DataTypes.DOUBLE,
 					allowNull: false
 				},
 				createdAt: {

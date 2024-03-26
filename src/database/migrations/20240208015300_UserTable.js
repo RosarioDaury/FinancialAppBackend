@@ -72,7 +72,7 @@ module.exports = {
 					defaultValue: true
 				},
 				balance: {
-					type: sequelize.DataTypes.INTEGER,
+					type: sequelize.DataTypes.DOUBLE,
 					allowNull: false
 				},
 				createdAt: {
@@ -92,8 +92,8 @@ module.exports = {
 				type: 'foreign key',
 				name: 'fauser_fk_usertype',
 				references: { field: 'id', table: 'FaUserTypes'},
-				onDelete: 'restrict',
-				onUpdate: 'restrict'
+				onDelete: 'cascade',
+				onUpdate: 'cascade'
 			});
 
 			await queryInterface.addIndex('FaUsers', {
