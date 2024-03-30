@@ -14,7 +14,7 @@ const getCategories: Pagination = async ({id, page, pageSize, name}) => {
     const count: number = await Categories.count({
         where: [
             {
-                id: id
+                user_id: id
             }
         ]
     });

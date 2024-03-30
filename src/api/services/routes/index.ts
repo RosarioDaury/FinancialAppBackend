@@ -4,6 +4,7 @@ import categoryRoutes from './category';
 import transactionRoutes from './transaction';
 import intervalRoutes from './reminderIntervals';
 import reminderRoutes from './reminder';
+import reminderNotificationRoutes from './reminderNotification';
 
 export default <FastifyPluginAsync> async function (app): Promise<void> {
     await app.register(userRoutes, {
@@ -24,5 +25,9 @@ export default <FastifyPluginAsync> async function (app): Promise<void> {
 
     await app.register(reminderRoutes, {
         prefix: '/reminder'
+    })
+
+    await app.register(reminderNotificationRoutes, {
+        prefix: '/reminder/notification'
     })
 }   

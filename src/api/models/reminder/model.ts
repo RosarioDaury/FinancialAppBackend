@@ -10,7 +10,6 @@ export interface ReminderAttributes {
     date: Date,
     title: string,
     description: string,
-    externalId: string,
     createdAt: Date,
     updatedAt: Date
 }
@@ -27,7 +26,6 @@ implements ReminderAttributes {
     declare date: Date;
     declare title: string;
     declare description: string;
-    declare externalId: string;
     declare createdAt: Date;
     declare updatedAt: Date;
 }
@@ -62,10 +60,6 @@ Reminders.init(
         },
         description: {
             type: DataTypes.STRING(100),
-            allowNull: false
-        },
-        externalId: {
-            type: DataTypes.STRING(60),
             allowNull: false
         },
         createdAt: {

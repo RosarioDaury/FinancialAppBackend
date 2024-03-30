@@ -25,15 +25,12 @@ export default <FastifyPluginAsync> async function (app): Promise<void> {
                     id: V.isInteger(),
                     user_id: V.isInteger(),
                     amount: V.isDouble(),
-                    interval: V.isObject({
-                        properties: {
-                            id: V.isInteger(),
-                            title: V.isString()
-                        }
-                    }),
+                    interval_id: V.isInteger(),
+                    intervalTitle: V.isString(),
                     date: V.isDateTime(),
                     title: V.isString(),
                     description: V.isString(),
+                    externalId: V.isString(),
                     createdAt: V.isDateTime(),
                     updatedAt: V.isDateTime()
                 } 
@@ -68,6 +65,9 @@ export default <FastifyPluginAsync> async function (app): Promise<void> {
                             date: V.isDateTime(),
                             title: V.isString(),
                             description: V.isString(),
+                            externalId: V.isString(),
+                            interval_id: V.isInteger(),
+                            intervalTitle: V.isString(),
                             createdAt: V.isDateTime(),
                             updatedAt: V.isDateTime()
                         }

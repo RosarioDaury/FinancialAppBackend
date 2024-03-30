@@ -80,10 +80,6 @@ module.exports = {
 					type: sequelize.DataTypes.STRING(100),
 					allowNull: false
 				},
-				externalId: {
-					type: sequelize.DataTypes.STRING(60),
-					allowNull: false
-				},
 				createdAt: {
 					type: 'TIMESTAMP',
 					allowNull: false,

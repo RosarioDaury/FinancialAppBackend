@@ -67,14 +67,26 @@ const createRemider: TokenRequestHandler<{Body: ReminderCreationAttributes}> = a
             interval_id,
             date,
             title,
-            description
+            description,
+            
         } = req.body;
 
         const {
             user: {id}
         } = req.headers
 
-        const record = await Reminders.create({reminder: {...req.body, user_id: id}});
+        const record = await Reminders.create(
+            {
+                reminder: {
+                    amount, 
+                    interval_id,
+                    date,
+                    title,
+                    description, 
+                    user_id: id
+                }
+            }
+        );
 
         return res.res200({
             id: record.id,

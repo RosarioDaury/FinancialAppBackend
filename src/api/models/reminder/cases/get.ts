@@ -1,6 +1,7 @@
 import Reminders, {ReminderAttributes} from "#/models/reminder/model";
 import { Op } from "sequelize";
 import { PaginationReturn } from "#/shared/interfaces/pagination";
+import { dbConnection } from "#database";
 
 type Pagination = (params: {
     userid: number,
@@ -18,22 +19,16 @@ const getPagination: Pagination = async ({userid, page = 1, pageSize = 6, title}
     })
 
     if(count > 0) {
-        records = await Reminders.findAll({
-            where: {
-                [Op.and]: [
-                    {user_id: userid},
-                    title ? {title: { [Op.like]: `%${title}%` }} : {},
-                ]
-            },
-            offset: pageSize > 0 ? ((pageSize) * (page - 1)) : undefined,
-            limit: pageSize > 0 ? pageSize : undefined,
-            include: [
-                {
-                    association: 'interval',
-                    attributes: ['id', 'title']
-                }
-            ]
-        })
+        let limit = pageSize;
+        let offset = (pageSize) * (page - 1)
+        let spQuery;
+        if(title) {
+            spQuery = `CALL FA_GET_REMINDERS_FILTER(${offset}, ${limit}, ${userid}, '${title}');`
+        } else {
+            spQuery = `CALL FA_GET_REMINDERS(${offset}, ${limit}, ${userid});`
+        }
+
+        records = await dbConnection.query(spQuery) as ReminderAttributes[];
     }
 
 
@@ -57,16 +52,12 @@ type ById = (params: {
 }) => Promise<ReminderAttributes>;
 
 const byId: ById = async ({userId, id}) => {
-    const record = await Reminders.findOne({
-        where: {
-            [Op.and]: {
-                user_id: userId,
-                id: id
-            }
-        }
-    });
+    const spQuery = `CALL FA_GET_REMINDERS_FILTER_BYID(${userId}, ${id});`
 
-    return record as ReminderAttributes
+    const record = await dbConnection.query(spQuery);
+    console.log(record)
+    
+    return record.length > 0 ? record[0] as unknown as ReminderAttributes : {} as ReminderAttributes
 }   
 
 export {
