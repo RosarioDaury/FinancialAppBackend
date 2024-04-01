@@ -14,5 +14,8 @@ export const config = {
     DB_DEV_NAME: process.env.DB_DEV_NAME,
     DB_DEV_USER: process.env.DB_DEV_USER,
     DB_DEV_CA_PATH: process.env.DB_DEV_CA_PATH,
-    HOST: process.env.HOST
+    HOST: process.env.HOST,
+    EMAIL_HOST: process.env.EMAIL_HOST,
+    EMAIL: process.env.EMAIL,
+    EMAIL_PASSWORD: process.env.EMAIL_PASSWORD
 }
