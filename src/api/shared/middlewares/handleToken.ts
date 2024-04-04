@@ -3,6 +3,7 @@ import { WithTokenRequest } from "../interfaces/tokenRequestHandler";
 import * as jwt from 'jsonwebtoken'
 import { config } from "#/config/envConfig";
 import { UserJwtPayload } from "jsonwebtoken";
+import Users from "#/models/users";
 
 const decodeToken = () => {
     return async function(req: WithTokenRequest<{}>, res: FastifyReply ) {
@@ -13,8 +14,14 @@ const decodeToken = () => {
                 throw new Error('Invalid Token Provided')
             }
 
-            let decoded = await <UserJwtPayload>jwt.verify(token, config.SECRETKEY_ACCESS_TOKEN);
-            req.headers.user = decoded;
+            let decoded = <UserJwtPayload>jwt.verify(token, config.SECRETKEY_ACCESS_TOKEN);
+            const user = await Users.get.byCredentials({username: decoded.username || ''})
+
+            if(!user) {
+                throw Error('INVALID USER')
+            }
+            
+            req.headers.user = user;
             
         } catch(error) {
             res.registerError({
